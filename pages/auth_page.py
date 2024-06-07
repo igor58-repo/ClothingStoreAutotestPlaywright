@@ -23,3 +23,8 @@ def auth_page_check_elements(page: Page):
                         f"ФР: {login_button.get_attribute('value')}").to_have_text('Login')
 
 
+# авторизация
+def authorization(page: Page, login, password):
+    page.locator("#user-name").fill(login)
+    page.locator("#password").fill(password)
+    page.locator("#login-button").click()
