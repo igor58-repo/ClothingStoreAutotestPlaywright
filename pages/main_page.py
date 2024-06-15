@@ -52,5 +52,29 @@ def check_filter_items(page):
         assert current_item == expected_item, f"Некорректный пункт меню. ОР: {expected_item}, ФР: {current_item}"
 
 
+# добавление товара в корзину
+def add_item_to_cart(page, item_number):
+    add_to_cart_button = page.locator(f"div.inventory_item:nth-child({item_number+1}) button.btn")
+    expect(add_to_cart_button, "Некорректная надпись на кнопке. ОР: 'Add to cart'").to_have_text("Add to cart")
+    add_to_cart_button.click()
+    expect(add_to_cart_button, "Некорректная надпись на кнопке. ОР: 'Remove'").to_have_text("Remove")
+    shopping_cart_badge = page.locator("span.shopping_cart_badge")
+    expect(shopping_cart_badge, "Не отображается счетчик на корзине").to_be_visible()
+    item_counter_on_cart = shopping_cart_badge.inner_text()
+    return int(item_counter_on_cart)
 
 
+# удаление товара из корзины
+def delete_item_from_cart(page, item_number):
+    add_to_cart_button = page.locator(f"div.inventory_item:nth-child({item_number+1}) button.btn")
+    expect(add_to_cart_button, "Некорректная надпись на кнопке. ОР: 'Remove'").to_have_text("Remove")
+    add_to_cart_button.click()
+    expect(add_to_cart_button, "Некорректная надпись на кнопке. ОР: 'Add to cart'").to_have_text("Add to cart")
+    shopping_cart_badge = page.locator("span.shopping_cart_badge")
+    if item_number == 0:
+        expect(shopping_cart_badge, "Отображается счетчик на корзине").not_to_be_visible()
+        item_counter_on_cart = 0
+    else:
+        expect(shopping_cart_badge, "Не отображается счетчик на корзине").to_be_visible()
+        item_counter_on_cart = shopping_cart_badge.inner_text()
+    return int(item_counter_on_cart)
