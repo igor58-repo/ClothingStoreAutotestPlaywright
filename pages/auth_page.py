@@ -30,6 +30,7 @@ def authorization(page: Page, login, password):
     page.locator("#login-button").click()
 
 
+
 # проверка элементов страницы после неудачной авторизации
 def check_opened_failed_auth_elements(page: Page, expected_error_message):
     error_message = page.locator("div.error>h3")
