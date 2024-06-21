@@ -105,5 +105,22 @@ def check_all_item_buttons_state(page, number_of_products_on_page, button_state)
 def check_specific_item_buttons_state(page, products_numbers, button_state):
     for i in products_numbers:
         add_to_cart_button = page.locator(f"div.inventory_item:nth-child({i}) button.btn")
-        expect(add_to_cart_button,
-               f"Некорректная надпись на кнопке. ОР: '{button_state}'. Товар не добавлен в корзину").to_have_text(button_state)
+        expect(add_to_cart_button, f"Некорректная надпись на кнопке. ОР: '{button_state}'. "
+                                   f"Товар не добавлен в корзину").to_have_text(button_state)
+
+
+def get_all_items_info(page, number_of_products_on_page):
+    items = []
+    for i in range(number_of_products_on_page):
+        #items.append([])
+        new_dict = {
+            'item_name':
+                (page.locator("div.inventory_item_name").nth(i).inner_text()),
+            'item_img':
+                (page.locator("img.inventory_item_img").nth(i).get_attribute('src')),
+            'item_desc':
+                (page.locator("div.inventory_item_desc").nth(i).inner_text()),
+            'item_price':
+                float((page.locator("div.inventory_item_price").nth(i).inner_text())[1:])}
+        items.append(new_dict)
+    return items

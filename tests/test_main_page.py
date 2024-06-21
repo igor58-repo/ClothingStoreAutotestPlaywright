@@ -1,9 +1,11 @@
 import pytest
 from playwright.sync_api import Page, expect
 from vars import url_auth_page, url_main_page
+from data import expected_items
 from pages.auth_page import authorization
 from pages.main_page import (check_elements_on_page, check_left_menu_items, check_filter_items, add_item_to_cart,
-                             delete_item_from_cart, add_item_to_cart_random, check_all_item_buttons_state, check_specific_item_buttons_state)
+                             delete_item_from_cart, add_item_to_cart_random, check_all_item_buttons_state,
+                             check_specific_item_buttons_state, get_all_items_info)
 from credentials import all_users, standard_user
 
 header_text = "Swag Labs"
@@ -87,3 +89,58 @@ def test_save_cart_state_after_logout(page: Page, login, password):
     authorization(page, login, password)
     assert page.url == url_main_page, f"Некорректный адрес. ОР: {url_main_page}, ФР: {page.url}"
     check_specific_item_buttons_state(page, products_numbers, "Remove")
+
+
+@pytest.mark.main
+@pytest.mark.parametrize(*standard_user)
+def test_all_items(page: Page, login, password):
+    """Проверка всех карточек товаров"""
+    page.goto(url_auth_page)
+    authorization(page, login, password)
+    assert page.url == url_main_page, f"Некорректный адрес. ОР: {url_main_page}, ФР: {page.url}"
+    current_items = get_all_items_info(page, number_of_products_on_page)
+    for i in range(number_of_products_on_page):
+        assert current_items[i] == expected_items[i], \
+            f"Некорректные элементы карточки. ОР: {expected_items[i]}, ФР: {current_items[i]}"
+
+
+@pytest.mark.main
+@pytest.mark.parametrize(*all_users)
+def test_all_items_sort_name(page: Page, login, password):
+    """Проверка сортировки карточек товаров по имени"""
+    page.goto(url_auth_page)
+    authorization(page, login, password)
+    assert page.url == url_main_page, f"Некорректный адрес. ОР: {url_main_page}, ФР: {page.url}"
+    page.locator("select.product_sort_container").select_option("Name (A to Z)")
+    current_items = get_all_items_info(page, number_of_products_on_page)
+    expected_items_sort = sorted(expected_items, key=lambda x: x['item_name'])
+    for i in range(number_of_products_on_page):
+        assert current_items[i] == expected_items_sort[i], \
+            f"Некорректные элементы карточки. ОР: {expected_items_sort[i]}, ФР: {current_items[i]}"
+    page.locator("select.product_sort_container").select_option("Name (Z to A)")
+    current_items = get_all_items_info(page, number_of_products_on_page)
+    expected_items_sort = sorted(expected_items, key=lambda x: x['item_name'], reverse=True)
+    for i in range(number_of_products_on_page):
+        assert current_items[i] == expected_items_sort[i], \
+            f"Некорректные элементы карточки. ОР: {expected_items_sort[i]}, ФР: {current_items[i]}"
+
+
+@pytest.mark.main
+@pytest.mark.parametrize(*all_users)
+def test_all_items_sort_price(page: Page, login, password):
+    """Проверка сортировки карточек товаров по стоимости"""
+    page.goto(url_auth_page)
+    authorization(page, login, password)
+    assert page.url == url_main_page, f"Некорректный адрес. ОР: {url_main_page}, ФР: {page.url}"
+    page.locator("select.product_sort_container").select_option("Price (low to high)")
+    current_items = get_all_items_info(page, number_of_products_on_page)
+    expected_items_sort = sorted(expected_items, key=lambda x: x['item_price'])
+    for i in range(number_of_products_on_page):
+        assert current_items[i] == expected_items_sort[i], \
+            f"Некорректные элементы карточки. ОР: {expected_items_sort[i]}, ФР: {current_items[i]}"
+    page.locator("select.product_sort_container").select_option("Price (high to low)")
+    current_items = get_all_items_info(page, number_of_products_on_page)
+    expected_items_sort = sorted(expected_items, key=lambda x: x['item_price'], reverse=True)
+    for i in range(number_of_products_on_page):
+        assert current_items[i] == expected_items_sort[i], \
+            f"Некорректные элементы карточки. ОР: {expected_items_sort[i]}, ФР: {current_items[i]}"
