@@ -109,10 +109,10 @@ def check_specific_item_buttons_state(page, products_numbers, button_state):
                                    f"Товар не добавлен в корзину").to_have_text(button_state)
 
 
+# получить информацию о всех товарах на странице
 def get_all_items_info(page, number_of_products_on_page):
     items = []
     for i in range(number_of_products_on_page):
-        #items.append([])
         new_dict = {
             'item_name':
                 (page.locator("div.inventory_item_name").nth(i).inner_text()),
@@ -122,5 +122,22 @@ def get_all_items_info(page, number_of_products_on_page):
                 (page.locator("div.inventory_item_desc").nth(i).inner_text()),
             'item_price':
                 float((page.locator("div.inventory_item_price").nth(i).inner_text())[1:])}
+        items.append(new_dict)
+    return items
+
+
+# получить информацию об определенных товарах на странице
+def get_specific_items_info(page, product_numbers):
+    items = []
+    for i in product_numbers:
+        new_dict = {
+            'item_name':
+                (page.locator("div.inventory_item_name").nth(i-1).inner_text()),
+            'item_img':
+                (page.locator("img.inventory_item_img").nth(i-1).get_attribute('src')),
+            'item_desc':
+                (page.locator("div.inventory_item_desc").nth(i-1).inner_text()),
+            'item_price':
+                float((page.locator("div.inventory_item_price").nth(i-1).inner_text())[1:])}
         items.append(new_dict)
     return items

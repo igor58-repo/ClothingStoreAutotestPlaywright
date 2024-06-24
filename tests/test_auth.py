@@ -4,7 +4,6 @@ from pages.auth_page import (auth_page_check_elements, authorization, check_open
                              close_failed_auth_elements)
 from credentials import all_users, non_existent_user, locked_out_user, empty_login, empty_password
 from playwright.sync_api import Page
-
 error_message_non_existent_user = "Epic sadface: Username and password do not match any user in this service"
 error_message_locked_out_user = "Epic sadface: Sorry, this user has been locked out."
 error_message_empty_login = "Epic sadface: Username is required"

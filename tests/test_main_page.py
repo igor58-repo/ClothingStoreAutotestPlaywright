@@ -1,18 +1,13 @@
 import pytest
 from playwright.sync_api import Page, expect
-from vars import url_auth_page, url_main_page
+from vars import (url_auth_page, url_main_page, number_of_products_on_page, header_text, number_of_menu_items,
+                  left_menu_items, filter_menu_items)
 from data import expected_items
 from pages.auth_page import authorization
 from pages.main_page import (check_elements_on_page, check_left_menu_items, check_filter_items, add_item_to_cart,
                              delete_item_from_cart, add_item_to_cart_random, check_all_item_buttons_state,
                              check_specific_item_buttons_state, get_all_items_info)
 from credentials import all_users, standard_user
-
-header_text = "Swag Labs"
-left_menu_items = ["All Items", "About", "Logout", "Reset App State"]
-filter_menu_items = ["Name (A to Z)", "Name (Z to A)", "Price (low to high)", "Price (high to low)"]
-number_of_products_on_page = 6
-number_of_menu_items = 4
 
 
 @pytest.mark.main

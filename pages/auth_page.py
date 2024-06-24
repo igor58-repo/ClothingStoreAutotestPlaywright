@@ -1,5 +1,5 @@
 import pytest
-from vars import login_logo_text
+from vars import header_text
 from playwright.sync_api import Page, expect
 
 
@@ -13,8 +13,8 @@ def auth_page_check_elements(page: Page):
     expect(login_input, "Не отображается поле ввода логина").to_be_visible()
     expect(password_input, "Не отображается поле ввода пароля").to_be_visible()
     expect(login_button, "Не отображается кнопка Login").to_be_visible()
-    expect(login_logo, f"Некорретный текст логотипа. ОР: {login_logo_text}, "
-                       f"ФР: {login_button.inner_text()}").to_have_text(login_logo_text)
+    expect(login_logo, f"Некорретный текст логотипа. ОР: {header_text}, "
+                       f"ФР: {login_button.inner_text()}").to_have_text(header_text)
     expect(login_input, f"Некорретный текст плейсхолдера поля ввода логина. ОР: 'Username', "
                         f"ФР: {login_input.get_attribute('placeholder')}").to_have_attribute('placeholder', 'Username')
     expect(password_input, f"Некорретный текст плейсхолдера поля ввода пароля. ОР: 'Password', "

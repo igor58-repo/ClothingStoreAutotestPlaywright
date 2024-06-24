@@ -23,7 +23,6 @@ def pytest_html_report_title(report):
 
 # добавление дополнительных столбцов Description и Time
 def pytest_html_results_table_header(cells):
-    #cells.insert(1, '<th class="sortable text" data-column-type="text">Notes</th>')
     cells.insert(1, '<th class="sortable text" data-column-type="text">Description</th>')
     cells.insert(3, '<th class="sortable time" data-column-type="time">Time</th>')
     cells.pop()
@@ -31,10 +30,9 @@ def pytest_html_results_table_header(cells):
 
 # заполнение столбцов description и Time
 def pytest_html_results_table_row(report, cells):
-    #cells.insert(1, f"<td>{report.fail_reason}</td>")
     cells.insert(1, f"<td>{report.description}</td>")
     start = datetime.fromtimestamp(report.start)
-    cells.insert(2, f'<td class="col-time">{start}</td>')
+    cells.insert(3, f'<td class="col-time">{start}</td>')
     cells.pop()
 
 
@@ -46,7 +44,6 @@ def pytest_runtest_makereport(item, call):
     report = outcome.get_result()
     report.description = str(item.function.__doc__)
     report.start = call.start
-    #report.fail_reason = call.excinfo.value if call.excinfo else None
     extra = getattr(report, 'extra', [])
     if report.when == 'call':
         if report.failed or "page" in item.funcargs:
