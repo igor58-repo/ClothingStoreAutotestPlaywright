@@ -4,7 +4,8 @@ from vars import url_auth_page, url_main_page, url_cart_page, number_of_products
 from pages.auth_page import authorization
 from credentials import all_users, standard_user
 from pages.main_page import add_item_to_cart_random
-from pages.cart_page import check_elements_cart, get_all_items_info, get_specific_items_info, delete_all_items_from_cart
+from pages.cart_page import (check_elements_cart, get_all_items_in_cart_info, get_specific_items_info,
+                             delete_all_items_from_cart)
 
 
 @pytest.mark.cart
@@ -34,12 +35,12 @@ def test_not_empty_cart_page_check_elements(page: Page, login, password):
     check_elements_cart(page, "not_empty")
     expect(page.locator("div.cart_item"), f"Некорректное количество товаров корзине. "
                                           f"ОР: {number_of_products_on_cart}").to_have_count(number_of_products_on_cart)
-    items_info_on_cart_page = get_all_items_info(page, number_of_products_on_cart)
+    items_info_on_cart_page = get_all_items_in_cart_info(page, number_of_products_on_cart)
     for i in range(len(items_info_on_cart_page)):
         assert items_info_on_cart_page[i] == items_info_on_main_page[i], \
             f"Некорректные данные в корзине. ОР: {items_info_on_main_page[i]}, ФР: {items_info_on_cart_page[i]}"
 
-@pytest.mark.new
+
 @pytest.mark.cart
 @pytest.mark.parametrize(*all_users)
 def test_remove_from_cart(page: Page, login, password):

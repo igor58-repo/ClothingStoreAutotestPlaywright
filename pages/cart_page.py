@@ -1,9 +1,5 @@
 import pytest
 from playwright.sync_api import Page, expect
-from vars import url_auth_page, url_main_page
-from data import expected_items
-from pages.auth_page import authorization
-from credentials import all_users, standard_user
 
 continue_shopping_text = "Continue Shopping"
 checkout_text = "Checkout"
@@ -12,7 +8,7 @@ cart_desc_text = "Description"
 
 
 # проверка элементов корзины
-def check_elements_cart(page, cart_state):
+def check_elements_cart(page: Page, cart_state):
     cart_quantity = page.locator("div.cart_quantity_label")
     cart_desc = page.locator("div.cart_desc_label")
     continue_shopping_button = page.locator("button#continue-shopping")
@@ -40,7 +36,7 @@ def check_elements_cart(page, cart_state):
 
 
 # получить информацию о всех товарах в корзине
-def get_all_items_info(page, number_of_products_on_page):
+def get_all_items_in_cart_info(page: Page, number_of_products_on_page):
     items = []
     for i in range(number_of_products_on_page):
         new_dict = {
@@ -55,7 +51,7 @@ def get_all_items_info(page, number_of_products_on_page):
 
 
 # получить информацию об определенных товарах на странице
-def get_specific_items_info(page, product_numbers):
+def get_specific_items_info(page: Page, product_numbers):
     items = []
     for i in product_numbers:
         new_dict = {
@@ -70,7 +66,7 @@ def get_specific_items_info(page, product_numbers):
 
 
 # удаление товара из корзины
-def delete_all_items_from_cart(page, number_of_products_on_cart):
+def delete_all_items_from_cart(page: Page, number_of_products_on_cart):
     for i in reversed(range(number_of_products_on_cart)):
         remove_from_cart_button = page.locator("button.cart_button").first
         expect(remove_from_cart_button, "Некорректная надпись на кнопке. ОР: 'Remove'").to_have_text("Remove")
