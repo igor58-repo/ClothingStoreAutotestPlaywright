@@ -3,7 +3,7 @@ from playwright.sync_api import Page, expect
 from vars import (url_auth_page, url_main_page, url_cart_page, url_checkout_step_1_page, url_checkout_step_2_page,
                   number_of_products_on_page)
 from pages.auth_page import authorization
-from credentials import all_users, standard_user, problem_user
+from credentials import all_users, standard_user
 from pages.main_page import add_item_to_cart_random
 from pages.cart_page import get_all_items_in_cart_info
 from pages.checkout_step_1_page import set_inputs_and_continue
@@ -26,7 +26,7 @@ def test_checkout_step_2_check_elements_empty(page: Page, login, password):
     assert page.url == url_checkout_step_2_page, f"Некорректный адрес. ОР: {url_checkout_step_2_page}, ФР: {page.url}"
     check_elements_empty(page)
 
-@pytest.mark.new
+
 @pytest.mark.checkout2
 @pytest.mark.parametrize(*all_users)
 def test_checkout_step_2_check_elements_empty(page: Page, login, password):

@@ -2,7 +2,7 @@ import pytest
 from playwright.sync_api import Page, expect
 from vars import url_auth_page, url_main_page, url_cart_page, url_checkout_step_1_page
 from pages.auth_page import authorization
-from credentials import all_users, standard_user, problem_user
+from credentials import all_users, standard_user
 from pages.checkout_step_1_page import (check_elements, check_opened_failed_checkout_elements,
                                         close_failed_checkout_elements)
 
