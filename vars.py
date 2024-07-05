@@ -11,6 +11,7 @@ final_title = "Checkout: Complete!"
 left_menu_items = ["All Items", "About", "Logout", "Reset App State"]
 filter_menu_items = ["Name (A to Z)", "Name (Z to A)", "Price (low to high)", "Price (high to low)"]
 complete_header_text = "Thank you for your order!"
-complete_text = "Your order has been dispatched, and will arrive just as fast as the pony can get there!"
-number_of_products_on_page = 6
+complete_message = "Your order has been dispatched, and will arrive just as fast as the pony can get there!"
+
+number_of_items_on_page = 6
 number_of_menu_items = 4

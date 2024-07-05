@@ -52,4 +52,3 @@ def pytest_runtest_makereport(item, call):
             img_url = take_screenshot(page)
             extra.append(pytest_html.extras.png(img_url))
         report.extras = extra
-
