@@ -14,4 +14,3 @@ complete_header_text = "Thank you for your order!"
 complete_message = "Your order has been dispatched, and will arrive just as fast as the pony can get there!"
 
 number_of_items_on_page = 6
-number_of_menu_items = 4
