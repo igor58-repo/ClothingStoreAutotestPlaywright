@@ -163,12 +163,23 @@ class MainPage:
         for i in items_numbers:
             new_dict = {
                 'item_name':
-                    (self.item_name.nth(i - 1).inner_text()),
+                    (self.item_name.nth(i).inner_text()),
                 'item_img':
-                    (self.item_img.nth(i).nth(i - 1).get_attribute('src')),
+                    (self.item_img.nth(i).get_attribute('src')),
                 'item_desc':
-                    (self.item_desc.nth(i).nth(i - 1).inner_text()),
+                    (self.item_desc.nth(i).inner_text()),
                 'item_price':
-                    float((self.item_price.nth(i - 1).inner_text())[1:])}
+                    float((self.item_price.nth(i).inner_text())[1:])}
+            items.append(new_dict)
+        return items
+
+    def get_specific_items_info_without_img(self, items_numbers):
+        """Получить информацию об определенных товарах на странице (без изображений)"""
+        items = []
+        for i in items_numbers:
+            new_dict = {
+                'item_name': self.item_name.nth(i).inner_text(),
+                'item_desc': self.item_desc.nth(i).inner_text(),
+                'item_price': float((self.item_price.nth(i).inner_text())[1:])}
             items.append(new_dict)
         return items
