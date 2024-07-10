@@ -7,7 +7,7 @@ from pages.checkout_step_1_page import CheckoutStepOnePage
 from pages.finish_page import FinishPage
 from credentials import all_users, standard_user
 
-@pytest.mark.new
+
 @pytest.mark.finish
 @pytest.mark.parametrize(*all_users)
 def test_finish_check_elements_empty(page, username, password):
