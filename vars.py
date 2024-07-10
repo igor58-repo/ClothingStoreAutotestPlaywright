@@ -13,4 +13,9 @@ filter_menu_items = ["Name (A to Z)", "Name (Z to A)", "Price (low to high)", "P
 complete_header_text = "Thank you for your order!"
 complete_message = "Your order has been dispatched, and will arrive just as fast as the pony can get there!"
 
+continue_shopping_text = "Continue Shopping"
+checkout_text = "Checkout"
+cart_quantity_text = "QTY"
+cart_desc_text = "Description"
+
 number_of_items_on_page = 6

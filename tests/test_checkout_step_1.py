@@ -1,5 +1,5 @@
 import pytest
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
 from vars import url_auth_page, url_main_page, url_cart_page, url_checkout_step_1_page
 from pages.auth_page import AuthPage
 from pages.checkout_step_1_page import CheckoutStepOnePage
@@ -28,8 +28,8 @@ def test_checkout_step_1_check_elements(page, username, password):
     assert page.url == url_cart_page, f"Некорректный адрес. ОР: {url_cart_page}, ФР: {page.url}"
     page.locator("button#checkout").click()
     assert page.url == url_checkout_step_1_page, f"Некорректный адрес. ОР: {url_checkout_step_1_page}, ФР: {page.url}"
-    checkout_page_step_1 = CheckoutStepOnePage(page)
-    checkout_page_step_1.check_elements()
+    checkout_step_1_page = CheckoutStepOnePage(page)
+    checkout_step_1_page.check_elements()
 
 
 @pytest.mark.checkout1
@@ -46,6 +46,6 @@ def test_checkout_empty_first_name(page, username, password, first_name, last_na
     assert page.url == url_cart_page, f"Некорректный адрес. ОР: {url_cart_page}, ФР: {page.url}"
     page.locator("button#checkout").click()
     assert page.url == url_checkout_step_1_page, f"Некорректный адрес. ОР: {url_checkout_step_1_page}, ФР: {page.url}"
-    checkout_page_step_1 = CheckoutStepOnePage(page)
-    checkout_page_step_1.check_opened_failed_checkout_elements(first_name, last_name, postal_code, error_message)
-    checkout_page_step_1.close_failed_checkout_elements()
+    checkout_step_1_page = CheckoutStepOnePage(page)
+    checkout_step_1_page.check_opened_failed_checkout_elements(first_name, last_name, postal_code, error_message)
+    checkout_step_1_page.close_failed_checkout_elements()

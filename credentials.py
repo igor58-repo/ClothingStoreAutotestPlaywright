@@ -8,7 +8,8 @@ all_users = ("username,password", [("standard_user", "secret_sauce"),
                                    ("error_user", "secret_sauce"),
                                    ("visual_user", "secret_sauce")])  # данные всех пользователей
 
-standard_user = ("username,password", [("standard_user", "secret_sauce")])
+standard_user = ("username,password", [("visual_user", "secret_sauce")])
+visual_user = ("username,password", [("standard_user", "secret_sauce")])
 problem_user = ("username,password", [("problem_user", "secret_sauce")])
 locked_out_user = ("username,password", [("locked_out_user", "secret_sauce")])
 non_existent_user = ("username,password", [("user", "user")])
